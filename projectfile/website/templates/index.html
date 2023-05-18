@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block header %}
+      <!--Jumbotron-->
+      <div>
+        <div class="jumbotron">
+            <h1 class="display-4" style="text-align:center">Welcome to MusicEvents</h1>
+            <p class="lead" style="text-align:center">Find the Perfect Event for You!</p>
+            <hr class="my-4">
+            <h2 style="text-align:center">Trending Events</h2>
+        </div>
+      </div>
+{% endblock %}
+
+{% block content %}   
+      <div class="container">
+         <div class="row mt-5 mb-5 justify-content-center">
+            <div class="col-md-10">
+               <div class="media border p-3 d-flex justify-content-start">
+                  <img class="align-self-center me-3" style="max-width:120px"
+                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Earth_Western_Hemisphere_transparent_background.png/600px-Earth_Western_Hemisphere_transparent_background.png"
+                     alt="Planet Earth">
+                  <div class="align-self-center media-body">
+                     <h5 class="mt-0">Find the best destinations on earth</h5>
+                     <p class="d-none d-sm-block">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
+                        scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra
+                        turpis. Fusce condimentum nunc ac nisi vulputate fringilla.</p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      
+      <div class="container-fluid col-md-8 col-10">
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4">
+            {% for destination in destinations %}
+            <div class="col mb-4" style="display:flex">
+              <div class="card">
+                <img src="{{ destination.image }}" class="card-img-top" alt="Image of {{ destination.name }}">
+                <div class="card-body">
+                  <h5 class="card-title">{{ destination.name }}</h5>
+                  <p class="card-text text-muted">Monday, April 10th</p>
+                  <p class="card-text text-muted">7:00PM</p>
+                  <p class="card-text text-muted">XYZ Music Hall</p>
+                  <a href="{{ url_for('event.show', id=destination.id) }}" class="stretched-link"></a>
+                </div>
+                <div class="card-footer open">
+                  <small class="text-muted">Open</small>
+                </div>
+              </div>
+            </div>
+            {% endfor %}          
+        </div>
+        
+    </div>
+{% endblock %}
