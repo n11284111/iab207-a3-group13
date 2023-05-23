@@ -36,6 +36,43 @@ class Comment(db.Model):
     #add the foreign keys
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     destination_id = db.Column(db.Integer, db.ForeignKey('destinations.id'))
+    event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
 
     def __repr__(self):
         return "<Comment: {}>".format(self.text)
+    
+class Event(db.Model):
+    __tablename__ = 'events'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80))
+    artist = db.Column(db.String(30))
+    description = db.Column(db.String(200))
+    genre = db.Column(db.String(20))
+    location = db.Column(db.String(100))
+    date = db.Column(db.Date)
+    start_time = db.Column(db.Time)
+    end_time = db.Column(db.Time)
+    tickets = db.Column(db.Integer)
+    ticket_price = db.Column(db.Float)    
+    image = db.Column(db.String(400))
+    status = db.Column(db.String(20))
+    # ... Create the Comments db.relationship
+	# relation to call events.comments and comment.event
+    comments = db.relationship('Comment', backref='event')
+	
+    def __repr__(self): #string print method
+        return "<Name: {}>".format(self.name)
+
+# class Event(db.Model):
+#     __tablename__ = 'events'
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String(80))
+#     description = db.Column(db.String(200))
+#     image = db.Column(db.String(400))
+#     currency = db.Column(db.String(3))
+#     # ... Create the Comments db.relationship
+# 	# relation to call destination.comments and comment.destination
+#     comments = db.relationship('Comment', backref='event')
+	
+#     def __repr__(self): #string print method
+#         return "<Name: {}>".format(self.name)
