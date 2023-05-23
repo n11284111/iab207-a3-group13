@@ -38,23 +38,52 @@
       </div>  
     </div>
     <hr>
-    <!-- Comments -->  
-    <div class="row" id="comments">  
-      <div class="col-md-12">  
-        <h2>Comments</h1>  
-      </div>  
-    </div>  
- 
-    <div class="row border-bottom"> 
-      {{ render_form(form,"/events/{0}/comment".format(destination.id)) }}
+
+    <!-- Comments -->
+    <div class="row d-flex justify-content-center">
+      <div class="col">
+        <div class="card shadow-0 border" style="background-color: #f0f2f5;">
+          <h5 class="p-4 pl-4">Comments</h3>
+            
+          <button id="addComment" data-target="#addComment,#cancelComment, #comment" class="col-1 ml-4 btn btn-secondary collapse show" data-toggle="collapse">Add Comment</button>
+          <button id="cancelComment" data-target="#comment,#cancelComment,#addComment" class="col-1 ml-4 btn btn-danger collapse" data-toggle="collapse">Cancel</button>
+
+          
+
+          <div class="card-body p-4">
+            <form>
+              <div class="input-group collapse mb-4" id="comment">
+                <textarea class="form-control" rows="3" placeholder="Comment" required></textarea> 
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#comment,#cancelComment,#addComment,#newComment">Post</button>
+              </div>
+            </form>
+
+            {{ render_form(form,"/events/{0}/comment".format(destination.id)) }}
       
-      {% for comment in destination.comments %}
-      <div class="col-md-12">  
-        <b>{{ comment.user.name }}</b> <span class="ml-2 text-muted">{{comment.created_at.strftime("%d/%m/%Y %I:%M %p")}}</span>
-        <p>{{ comment.text }}</p>  
-      </div> 
-      {% endfor %} 
-    </div>  
+            {% for comment in destination.comments %}
+            <br>
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-body">
+                  <p>{{ comment.text }}</p>
+      
+                  <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-row align-items-center">
+                      <p class="small mb-0 ms-2" style="color:blue">{{ comment.user.name }}</p>
+                    </div>
+                    <div class="d-flex flex-row align-items-center">
+                      <p class="small text-muted mb-0">{{comment.created_at.strftime("%d/%m/%Y - %I:%M %p")}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %} 
+
+          </div>
+        </div>
+      </div>
+    </div>
   </div> 
 
 {% endblock %}
