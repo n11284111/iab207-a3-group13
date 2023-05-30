@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from .models import Destination, Comment
-from .forms import DestinationForm, CommentForm
+from .models import Event, Comment
+from .forms import EventForm, CommentForm
 from . import db
 import os
 from werkzeug.utils import secure_filename
@@ -11,7 +11,7 @@ destbp = Blueprint('event', __name__, url_prefix='/events')
 
 @destbp.route('/<id>')
 def show(id):
-    destination = db.session.scalar(db.select(Destination).where(Destination.id==id))
+    destination = db.session.scalar(db.select(Event).where(Event.id==id))
     # create the comment form
     form = CommentForm()    
     return render_template('events/show.html', destination=destination, form=form)
@@ -20,20 +20,46 @@ def show(id):
 @login_required
 def create():
   print('Method type: ', request.method)
-  form = DestinationForm()
+  form = EventForm()
   if form.validate_on_submit():
     #call the function that checks and returns image
     db_file_path = check_upload_file(form)
-    destination = Destination(name=form.name.data,description=form.description.data, 
-    image=db_file_path,currency=form.currency.data)
+    event = Event(
+      name=form.name.data,
+      artist=form.artist.data,
+      description=form.description.data,       
+      genre = form.genre.data,
+      location = form.location.data,
+      date = form.date.data,
+      start_time = form.start_time.data,
+      end_time = form.end_time.data,
+      tickets = form.tickets.data,
+      ticket_price = form.ticket_price.data,   
+      image=db_file_path,
+      status = form.status.data
+      )
     # add the object to the db session
-    db.session.add(destination)
+    db.session.add(event)
     # commit to the database
     db.session.commit()
     flash('Successfully created new travel destination', 'success')
     #Always end with redirect when form is valid
     return redirect(url_for('event.create'))
   return render_template('events/create.html', form=form)
+
+# id = db.Column(db.Integer, primary_key=True)
+# name = db.Column(db.String(80))
+# artist = db.Column(db.String(30))
+# description = db.Column(db.String(200))
+# genre = db.Column(db.String(20))
+# location = db.Column(db.String(100))
+# date = db.Column(db.DateTime)
+# start_time = db.Column(db.DateTime)
+# end_time = db.Column(db.DateTime)
+# tickets_available = db.Column(db.Integer)
+# ticket_price = db.Column(db.Float)    
+# image = db.Column(db.String(400))
+# status = db.Column(db.String(20))
 
 def check_upload_file(form):
   #get file data from form  
@@ -54,7 +80,7 @@ def check_upload_file(form):
 def comment(destination):  
     form = CommentForm()  
     #get the destination object associated to the page and the comment
-    destination = db.session.scalar(db.select(Destination).where(Destination.id==destination))
+    destination = db.session.scalar(db.select(Event).where(Event.id==destination))
     if form.validate_on_submit():  
       #read the comment from the form
       comment = Comment(text=form.text.data, destination=destination,
