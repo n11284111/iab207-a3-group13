@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from flask_bootstrap import Bootstrap
+from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
@@ -11,7 +11,7 @@ app = Flask(__name__)
 def create_app():
     
     #we use this utility module to display forms quickly
-    bootstrap = Bootstrap(app)
+    bootstrap = Bootstrap5(app)
 
     #this is a much safer way to store passwords
     bcrypt = Bcrypt(app)
