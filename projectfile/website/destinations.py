@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from .models import Event, Comment
+from .models import Event, Comment, Destination
 from .forms import EventForm, CommentForm
 from . import db
 import os
@@ -11,7 +11,7 @@ destbp = Blueprint('event', __name__, url_prefix='/events')
 
 @destbp.route('/<id>')
 def show(id):
-    destination = db.session.scalar(db.select(Event).where(Event.id==id))
+    destination = db.session.scalar(db.select(Destination).where(Destination.id==id))
     # create the comment form
     form = CommentForm()    
     return render_template('events/show.html', destination=destination, form=form)
@@ -80,7 +80,7 @@ def check_upload_file(form):
 def comment(destination):  
     form = CommentForm()  
     #get the destination object associated to the page and the comment
-    destination = db.session.scalar(db.select(Event).where(Event.id==destination))
+    destination = db.session.scalar(db.select(Destination).where(Destination.id==destination))
     if form.validate_on_submit():  
       #read the comment from the form
       comment = Comment(text=form.text.data, destination=destination,

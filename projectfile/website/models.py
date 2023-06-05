@@ -36,7 +36,7 @@ class Comment(db.Model):
     #add the foreign keys
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     destination_id = db.Column(db.Integer, db.ForeignKey('destinations.id'))
-    event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
+    #event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
 
     def __repr__(self):
         return "<Comment: {}>".format(self.text)
@@ -58,7 +58,7 @@ class Event(db.Model):
     status = db.Column(db.String(20))
     # ... Create the Comments db.relationship
 	# relation to call events.comments and comment.event
-    comments = db.relationship('Comment', backref='event')
+    #comments = db.relationship('Comment', backref='event')
 	
     def __repr__(self): #string print method
         return "<Name: {}>".format(self.name)
