@@ -11,10 +11,10 @@ destbp = Blueprint('event', __name__, url_prefix='/events')
 
 @destbp.route('/<id>')
 def show(id):
-    destination = db.session.scalar(db.select(Event).where(Event.id==id))
+    event = db.session.scalar(db.select(Event).where(Event.id==id))
     # create the comment form
     form = CommentForm()    
-    return render_template('events/show.html', destination=destination, form=form)
+    return render_template('events/show.html', event=event, form=form)
 
 @destbp.route('/create', methods=['GET', 'POST'])
 @login_required
@@ -75,15 +75,15 @@ def check_upload_file(form):
   fp.save(upload_path)
   return db_upload_path
 
-@destbp.route('/<destination>/comment', methods=['GET', 'POST'])  
+@destbp.route('/<event>/comment', methods=['GET', 'POST'])  
 @login_required
-def comment(destination):  
+def comment(event):  
     form = CommentForm()  
     #get the destination object associated to the page and the comment
-    destination = db.session.scalar(db.select(Event).where(Event.id==destination))
+    event = db.session.scalar(db.select(Event).where(Event.id==event))
     if form.validate_on_submit():  
       #read the comment from the form
-      comment = Comment(text=form.text.data, destination=destination,
+      comment = Comment(text=form.text.data, event=event,
                         user=current_user) 
       #here the back-referencing works - comment.destination is set
       # and the link is created
@@ -94,5 +94,5 @@ def comment(destination):
       flash('Your comment has been added', 'success')  
       # print('Your comment has been added', 'success') 
     # using redirect sends a GET request to destination.show
-    return redirect(url_for('event.show', id=destination.id))
+    return redirect(url_for('event.show', id=event.id))
     
