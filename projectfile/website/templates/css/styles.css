@@ -1,0 +1,41 @@
+#center, .card-footer, .center {
+
+    text-align: center;
+
+}
+
+#historyHeadings {
+    color: grey ;
+}
+
+.open {
+    background-color:#d4ffd1;
+}
+
+.closed {
+    background-color: #ffd1d1;
+}
+
+.card:hover, .carousel-inner:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.booking {
+    margin: 0 auto;
+}
+
+.color1 {
+    background-color:  #d1feff;
+}
+
+.color2 {
+    background-color:  #ecd1ff;
+}
+
+.color3 {
+    background-color:  #ffd1f5;
+}
+
+.color4 {
+    background-color:  #fcffd1;
+}
