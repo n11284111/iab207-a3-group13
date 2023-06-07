@@ -13,6 +13,8 @@ class User(db.Model, UserMixin):
 
     # relation to call user.comments and comment.created_by
     comments = db.relationship('Comment', backref='user')
+    events = db.relationship('Event', backref='user')
+    bookings = db.relationship('Booking', backref='user')
 
 class Comment(db.Model):
     __tablename__ = 'comments'
@@ -41,9 +43,25 @@ class Event(db.Model):
     ticket_price = db.Column(db.Float)    
     image = db.Column(db.String(400))
     status = db.Column(db.String(20))
+    #add the foreign keys
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     # ... Create the Comments db.relationship
 	# relation to call events.comments and comment.event
     comments = db.relationship('Comment', backref='event')
+    bookings = db.relationship('Booking', backref='event')
 	
     def __repr__(self): #string print method
         return "<Name: {}>".format(self.name)
+
+class Booking(db.Model):
+    __tablename__ = 'bookings'
+    id = db.Column(db.Integer, primary_key=True)
+    num_tickets = db.Column(db.Integer)
+    total_paid = db.Column(db.Float)
+    booking_date = db.Column(db.DateTime, default=datetime.now)
+    #add the foreign keys
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
+
+    def __repr__(self):
+        return "<Comment: {}>".format(self.text)
