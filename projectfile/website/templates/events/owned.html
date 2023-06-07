@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+
+{% block header %}
+<!--Jumbotron-->
+<div class="container-fluid">
+    My Events
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid col-md-8 col-10">
+   <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4">
+
+      {% for event in events %}
+      <div class="col mb-4" style="display:flex">
+         <div class="card">
+            <img src="{{ event.image }}" class="card-img-top" alt="Image of {{ event.name }}">
+            <div class="card-body">
+               <h5 class="card-title">{{ event.name }}</h5>
+               <p class="card-text text-muted">{{ event.date.strftime("%A, %B %d %Y") }}</p>
+               <p class="card-text text-muted">{{ event.start_time.strftime("%I:%M %p") }}</p>
+               <p class="card-text text-muted">{{ event.location }}</p>
+               <a href="{{ url_for('event.show', id=event.id) }}" class="stretched-link"></a>
+            </div>
+            <div class="card-footer {{ event.status }}">
+               <small class="text-muted">{{ event.status }}</small>
+            </div>
+         </div>
+      </div>
+      {% endfor %}
+
+   </div>
+</div>
+{% endblock %}

@@ -64,4 +64,4 @@ class Booking(db.Model):
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
 
     def __repr__(self):
-        return "<Comment: {}>".format(self.text)
+        return "<Booking: {}>".format(self.text)

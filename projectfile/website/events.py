@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from .models import Event, Comment
-from .forms import EventForm, CommentForm
+from .models import Event, Comment, Booking
+from .forms import EventForm, CommentForm, BookingForm
 from . import db
 import os
 from werkzeug.utils import secure_filename
@@ -44,7 +44,7 @@ def create():
     db.session.commit()
     flash('Successfully created new music event', 'success')
     #Always end with redirect when form is valid
-    return redirect(url_for('event.create'))
+    return redirect(url_for('event.show', id=event.id))
   return render_template('events/create.html', form=form)
 
 def check_upload_file(form):
@@ -81,4 +81,26 @@ def comment(event):
       # print('Your comment has been added', 'success') 
     # using redirect sends a GET request to event.show
     return redirect(url_for('event.show', id=event.id))
+
+@eventbp.route('/myevents', methods=['GET', 'POST']) 
+@login_required
+def myEvents():
+    print(request)
+    events = db.session.query(Event).filter(Event.user_id == current_user.id)
+    return render_template('events/owned.html', events=events)
+
+@eventbp.route('/<event>/book', methods=['GET', 'POST'])  
+@login_required
+def book(event):  
+    print(request)
+    if request.method == "POST":
+        searchval = request.form.get("search")
+        if searchval and searchval != "":
+            print(searchval)
+            query = "%" + searchval + "%"
+            events = db.session.query(Event).filter(Event.name.contains(query))
+            return render_template('index.html', events=events)
+        else:
+            return redirect(url_for('main.index'))
+
     
