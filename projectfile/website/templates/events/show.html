@@ -4,68 +4,107 @@
 
 {% block content %}
 
-<div class="container">  
-    <div class="row mt-5 mb-3">  
-      <div class="col-md-12">  
-        <div class="float-left">  
-          <h1 class="mb-0">{{ event.name }}</h1>  
-          <p>Popular Destination</p>  
-        </div>  
- 
-        <div class="float-right text-right">  
-          <p class="mb-0">1 AUD equals</p>  
-        </div>  
-      </div>  
-    </div>  
- 
-    <!-- Destination --> 
-    <div class="row">  
-      <div class="col-md-12">  
-        <div class="card my-3">  
-          <div class="card-body">  
-            <div class="media">  
-              <img class="align-self-start mr-3 col-12" src="{{ event.image }}">  
-              <div class="media-body">  
-                <small class="font-weight-bold text-muted">Stay 2 nights</small>  
-                <h5 class="mt-0">{{ event.name }}</h5>  
-                <p>{{ event.description }}</p>  
-                <a href="#" class="btn btn-danger">Book Now</a>  
-              </div>  
-            </div>  
-          </div>  
-        </div>  
-      </div>  
+<div class="container-fluid">
+  <br>
+  <div class="row">
+    <div class="col-5">
+      <img src="{{ event.image }}" class="img-fluid">
+
+      <br>
+      <br>
+      <div class="container-fluid col-12">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#bookTickets">
+          Book Tickets
+        </button><br>
+
+      </div>
     </div>
-    <hr>
+    <br>
 
-    <!-- Comments -->
-    <div class="row d-flex justify-content-center">
-      <div class="col">
-        <div class="card shadow-0 border" style="background-color: #f0f2f5;">
-          <h5 class="p-4 pl-4">Comments</h3>
-            
-          <button id="addComment" data-target="#addComment,#cancelComment, #comment" class="col-1 ml-4 btn btn-secondary collapse show" data-toggle="collapse">Add Comment</button>
-          <button id="cancelComment" data-target="#comment,#cancelComment,#addComment" class="col-1 ml-4 btn btn-danger collapse" data-toggle="collapse">Cancel</button>
+    <div class="col-7">
+      <h1 class="display-4 center mb-0 {{ event.status }}">{{ event.name}}</h1>
+      <p class="center mb-0 {{ event.status }}">{{ event.status }}<br></br></p><br>
 
-          
+      <div class="row">
+        <div class="col">
+
+          <h4><b>Artist:</b> {{ event.artist }}</h4>
+          <br>
+          <h4><b>Genre:</b> {{ event.genre }}</h4>
+          <br>
+          <h4><b>Date:</b> {{event.date.strftime("%d/%m/%Y")}}</h4>
+          <br>
+          <h4><b>Duration:</b> {{event.start_time.strftime("%I:%M %p")}} - {{event.end_time.strftime("%I:%M %p")}}</h4>
+          <br>
+          <h4><b>Location:</b> {{event.location}}</h4>
+          <br>
+          <h4><b>Tickets:</b> ${{event.ticket_price}}</h4>
+
+        </div>
+        <div class="col">
+          <h4><b>About the event</b></h4>
+          <h4>{{event.description}}</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  
+  <!-- Modal -->
+  <div class="modal fade" id="bookTickets" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalLabel">Book Tickets</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+  </div>
+  <br>
+
+  <!-- Comments -->
+  <div class="row d-flex justify-content-center" id="comments">
+    <div class="col">
+      <div class="card shadow-0 border" style="background-color: #f0f2f5;">
+        <h5 class="p-4 pl-4">Comments</h3>
+
+          <button id="addComment" data-target="#addComment,#cancelComment, #comment"
+            class="col-1 ml-4 btn btn-secondary collapse show" data-toggle="collapse">Add Comment</button>
+          <button id="cancelComment" data-target="#comment,#cancelComment,#addComment"
+            class="col-1 ml-4 btn btn-danger collapse" data-toggle="collapse">Cancel</button>
+
+
 
           <div class="card-body p-4">
             <form>
               <div class="input-group collapse mb-4" id="comment">
-                <textarea class="form-control" rows="3" placeholder="Comment" required></textarea> 
-                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#comment,#cancelComment,#addComment,#newComment">Post</button>
+                <textarea class="form-control" rows="3" placeholder="Comment" required></textarea>
+                <button class="btn btn-primary" type="button" data-toggle="collapse"
+                  data-target="#comment,#cancelComment,#addComment,#newComment">Post</button>
               </div>
             </form>
 
             {{ render_form(form,"/events/{0}/comment".format(event.id)) }}
-      
+
             {% for comment in event.comments %}
             <br>
             <div class="col-md-12">
               <div class="card">
                 <div class="card-body">
                   <p>{{ comment.text }}</p>
-      
+
                   <div class="d-flex justify-content-between">
                     <div class="d-flex flex-row align-items-center">
                       <p class="small mb-0 ms-2" style="color:blue">{{ comment.user.name }}</p>
@@ -77,12 +116,12 @@
                 </div>
               </div>
             </div>
-            {% endfor %} 
+            {% endfor %}
 
           </div>
-        </div>
       </div>
     </div>
-  </div> 
+  </div>
+</div>
 
 {% endblock %}
