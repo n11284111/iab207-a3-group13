@@ -1,15 +1,14 @@
 {% extends 'base.html' %}
 
-
-{% block header %}
-<!--Jumbotron-->
-<div class="container-fluid">
-    My Events
-</div>
-{% endblock %}
-
 {% block content %}
 <div class="container-fluid col-md-8 col-10">
+   <br>
+   <h2>My Events</h2>
+   <a>Click on an event to edit its details</a>
+   <br>
+   <br>
+
+
    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4">
 
       {% for event in events %}
@@ -21,7 +20,7 @@
                <p class="card-text text-muted">{{ event.date.strftime("%A, %B %d %Y") }}</p>
                <p class="card-text text-muted">{{ event.start_time.strftime("%I:%M %p") }}</p>
                <p class="card-text text-muted">{{ event.location }}</p>
-               <a href="{{ url_for('event.show', id=event.id) }}" class="stretched-link"></a>
+               <a href="{{ url_for('event.update', id=event.id) }}" class="stretched-link"></a>
             </div>
             <div class="card-footer {{ event.status }}">
                <small class="text-muted">{{ event.status }}</small>

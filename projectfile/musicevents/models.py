@@ -7,6 +7,8 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     emailid = db.Column(db.String(100), unique=True, nullable=False)
+    address = db.Column(db.String(100))
+    phone = db.Column(db.String(20))
 	#password is never stored in the DB, an encrypted password is stored
 	# the storage should be at least 255 chars long
     password_hash = db.Column(db.String(255), nullable=False)
