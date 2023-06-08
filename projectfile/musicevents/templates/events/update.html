@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% from 'bootstrap5/form.html' import render_form %}
+{% from 'bootstrap5/form.html' import render_field %}
+
+{% block content %}
+
+
+    <div class="row mt-5">
+      <div class="col-md-12">
+        <h1>Update Event Posting</h1>
+        
+        <form action="{{ url_for('event.update', id=event.id) }}" method="post" class="g-3 m-3 col-9 mx-auto" enctype="multipart/form-data">
+            <div class="row">
+              <h4 class="mb-4 mt-4 ml-3">Create an Event Posting</h4>
+            </div>
+            <div class="row">
+              <div class="col-md-8">
+                <div class="row">
+                  <div class="col-md-6 mb-4">
+                    <label for="eventName" class="form-label">Event Name</label>
+                    <input type="text" class="form-control" id="eventName" name="eventName" placeholder="Example Event Name" required>
+                  </div>
+                  <div class="col-md-6 mb-4">
+                    <label for="artistName" class="form-label">Artist</label>
+                    <input type="text" class="form-control" id="artistName" name="artistName" placeholder="Example Artist Name" required>
+                  </div>
+                  <div class="col-md-2 mb-4">
+                    <label for="genre" class="form-label">Genre</label><br>
+                    <select class="form-select" id="genre" name="genre" required>
+                      <option selected disabled value="">Select</option>
+                      <option>Rap</option>
+                      <option>Hip Hop</option>
+                      <option>Country</option>
+                      <option>Rock</option>
+                      <option>Pop</option>
+                      <option>Dance</option>
+                      <option>Electronic</option>
+                      <option>Punk</option>
+                      <option>Jazz</option>
+                      <option>Metal</option>
+                      <option>Other</option>
+                    </select>
+                  </div>
+                  <div class="col-md-10 mb-4">
+                    <label for="location" class="form-label">Location</label>
+                    <input type="text" class="form-control" id="location" name="location" placeholder="Example Address" required>
+                  </div>
+  
+                  <div class="col-md-6 mb-4">
+                    <label for="date" class="form-label">Date</label>
+                    <input type="date" class="form-control" id="date" name="date" required>
+                  </div>
+                  
+                  <div class="col-md-6 mb-4">
+                    <label for="endTime" class="form-label">Start and End Time</label>
+                    <div class="input-group">
+                      <input type="time" class="form-control" id="startTime" name="startTime" required>
+                      <input type="time" class="form-control" id="endTime" name="endTime" required>
+                    </div>
+                  </div>
+                </div>            
+              </div>
+    
+              <div class="col-md-4 mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="9" placeholder="Example Event Description" required></textarea>
+              </div>
+            </div>
+            
+            <div class="row">
+  
+              <div class="col-md-4 mb-3">
+                <label for="ticketPrice" class="form-label">Ticket Price</label>
+                <input type="number" min="1" step="any" class="form-control" id="ticketPrice" name="ticketPrice" placeholder="Example Ticket Price" required>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label for="numTickets" class="form-label">Number of Tickets Available</label>
+                <input type="number" min="1" class="form-control" id="numTickets" name="numTickets" placeholder="Example Ticket Number" required>
+              </div>
+              <div class="col-md-2 mb-3">
+                <label for="formFile" class="form-label">Event Image</label>
+                <input class="form-control" type="file" name="image" id="formFile" required>
+              </div>
+              <div class="col-md-2 mb-3" style="text-align: right;">
+                <br class="mb-2">
+                <button class="btn btn-primary">Create Event</button>
+              </div>
+  
+            </div>
+            
+          </form>
+
+      </div>
+    </div>
+
+
+{% endblock %}

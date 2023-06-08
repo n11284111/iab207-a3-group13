@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from .models import Event, Comment, Booking
 import random
-from .forms import EventForm, CommentForm
+from .forms import EventForm, CommentForm, TestForm
 from datetime import datetime
 from . import db
 import os
@@ -49,7 +49,7 @@ def create():
         flash('Successfully created new music event', 'success')
         # Always end with redirect when form is valid
         return redirect(url_for('event.show', id=event.id))
-    return render_template('events/create.html', form=form)
+    return render_template('events/create.html', form=form, header="Create")
 
 
 def check_upload_file(form):
@@ -127,9 +127,11 @@ def book(id):
         return redirect(url_for('event.show', id=event.id))
 
 
-@eventbp.route('/edit', methods=['GET', 'POST'])
+@eventbp.route('/<id>/edit', methods=['GET', 'POST'])
 @login_required
-def update():
+def update(id):
+    event = db.session.query(Event).filter(Event.id == id)
+    print('Method type: ', request.method)
     form = EventForm()
     if form.validate_on_submit():
         # call the function that checks and returns image
@@ -155,7 +157,7 @@ def update():
         flash('Successfully created new music event', 'success')
         # Always end with redirect when form is valid
         return redirect(url_for('event.show', id=event.id))
-    return render_template('events/create.html', form=form)
+    return render_template('events/create.html', form=form, header="Update")
 
 @eventbp.route('/bookinghistory', methods=['GET', 'POST'])
 @login_required

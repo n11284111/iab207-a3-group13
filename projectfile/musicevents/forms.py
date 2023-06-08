@@ -52,3 +52,9 @@ class RegisterForm(FlaskForm):
 class CommentForm(FlaskForm):
     text = TextAreaField('Add comment', [InputRequired()])
     submit = SubmitField('Create')
+
+
+class TestForm(FlaskForm):
+    image = FileField('Destination Image', validators=[
+        FileRequired(message='Image cannot be empty'),
+        FileAllowed(ALLOWED_FILE, message='Only supports PNG, JPG, png, jpg')])
