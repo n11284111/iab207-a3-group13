@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+    <h2 style="text-align: center;">Booking History</h2>
+    <br>
+    {% if bookings[0] %}
+        {% for booking in bookings %}
+        <br>
+        <div class="card mb-2 col-10 booking {{ booking.event.status }}">
+            <div class="row no-gutters">
+
+                <div class="col-md-10">
+                    <div class="card-body" style="background-color: #e9ecef;">
+                        <h5 class="card-title">{{ booking.event.name }}</h5>
+                        <p class="card-text">Booking Details:</p>
+                        <div>
+                            <p class="card-text">{{ booking.booking_date.strftime("%d/%m/%Y - %I:%M %p") }}</p>
+                            <p class="card-text">${{"{:.2f}".format(booking.total_paid)}}</p>
+                            <p class="card-text"><small class="text-muted">#{{ booking.id }}</small></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <img src="{{ booking.event.image }}" class="card-img" alt="..."
+                        style="width:100%;height:100%; object-fit: cover;">
+                </div>
+                <a href="{{ url_for('event.show', id=booking.event.id) }}" class="stretched-link"></a>
+            </div>
+        </div>
+        <br>
+        {% endfor %}
+    {% else %}
+        <h3 style="text-align: center;">No bookings have been made yet.</h3>
+    {% endif %}
+</div>
+{% endblock %}
