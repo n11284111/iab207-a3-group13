@@ -1,0 +1,22 @@
+{% include "base.html" %}
+{% import "bootstrap/form.html" as wtf %}
+{% block body %}
+
+<!-- Form rendering is simple and easy if using WTForms -->
+<!-- If you want more granular control, declare the form manually: -->
+<!-- <form action="/route" method="post"> -->
+<div class="col-md-6 container">
+    <br>
+    <h4>{{heading}}</h4>
+    <br>
+    {{wtf.render_form(form)}}
+    <!-- When you have login form, then show the user a link to register -->
+    {% if heading|lower =='login' %}
+    <p>New user? <a href="{{ url_for('auth.register') }}">Click here to register</a>.</p>
+    {% endif %}
+</div>
+
+
+
+
+{% endblock %}

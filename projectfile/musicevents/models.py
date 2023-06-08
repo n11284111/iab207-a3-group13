@@ -42,7 +42,7 @@ class Event(db.Model):
     tickets = db.Column(db.Integer)
     ticket_price = db.Column(db.Float)    
     image = db.Column(db.String(400))
-    status = db.Column(db.String(20))
+    status = db.Column(db.String(20), default="Open")
     #add the foreign keys
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     # ... Create the Comments db.relationship

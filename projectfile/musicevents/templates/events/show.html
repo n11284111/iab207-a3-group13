@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% from 'bootstrap5/form.html' import render_form %}
+
+{% block content %}
+
+<div class="container-fluid">
+  <br>
+  <div class="row">
+    <div class="col-5">
+      <img src="{{ event.image }}" class="img-fluid">
+
+      <br>
+      <br>
+      <div class="container-fluid col-12">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#bookTickets">
+          Book Tickets
+        </button><br>
+
+      </div>
+    </div>
+    <br>
+
+    <div class="col-7">
+      <h1 class="display-4 center mb-0 {{ event.status }}">{{ event.name}}</h1>
+      <p class="center mb-0 {{ event.status }}">{{ event.status }}<br></br></p><br>
+
+      <div class="row">
+        <div class="col">
+
+          <h4><b>Artist:</b> {{ event.artist }}</h4>
+          <br>
+          <h4><b>Genre:</b> {{ event.genre }}</h4>
+          <br>
+          <h4><b>Date:</b> {{event.date.strftime("%d/%m/%Y")}}</h4>
+          <br>
+          <h4><b>Duration:</b> {{event.start_time.strftime("%I:%M %p")}} - {{event.end_time.strftime("%I:%M %p")}}</h4>
+          <br>
+          <h4><b>Location:</b> {{event.location}}</h4>
+          <br>
+          <h4><b>Tickets:</b> ${{"{:.2f}".format(event.ticket_price)}}</h4>
+
+        </div>
+        <div class="col">
+          <h4><b>About the event</b></h4>
+          <h4>{{event.description}}</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  
+  <!-- Modal -->
+  <div class="modal fade" id="bookTickets" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalLabel">Book Tickets</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+  </div>
+  <br>
+
+  <!-- Comments -->
+  <div class="row d-flex justify-content-center" id="comments">
+    <div class="col">
+      <div class="card shadow-0 border" style="background-color: #f0f2f5;">
+        <h5 class="p-4 pl-4">Comments</h5>
+          <div class="card-body p-4">
+            {{ render_form(form,"/events/{0}/comment".format(event.id)) }}
+
+            {% for comment in event.comments %}
+            <br>
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-body">
+                  <p>{{ comment.text }}</p>
+
+                  <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-row align-items-center">
+                      <p class="small mb-0 ms-2" style="color:blue">{{ comment.user.name }}</p>
+                    </div>
+                    <div class="d-flex flex-row align-items-center">
+                      <p class="small text-muted mb-0">{{comment.created_at.strftime("%d/%m/%Y - %I:%M %p")}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

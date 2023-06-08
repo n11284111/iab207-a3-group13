@@ -16,6 +16,14 @@
     background-color: #ffd1d1;
 }
 
+.invalid {
+    background-color: #ffd1d1;
+}
+
+.soldout {
+    background-color: #ffd1d1;
+}
+
 .card:hover, .carousel-inner:hover {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
