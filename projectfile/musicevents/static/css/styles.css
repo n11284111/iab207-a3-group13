@@ -12,16 +12,16 @@
     background-color:#d4ffd1;
 }
 
-.closed {
+.cancelled {
     background-color: #ffd1d1;
 }
 
 .invalid {
-    background-color: #ffd1d1;
+    background-color: #F3EFAE;
 }
 
 .soldout {
-    background-color: #ffd1d1;
+    background-color: #F3BA6D;
 }
 
 .card:hover, .carousel-inner:hover {

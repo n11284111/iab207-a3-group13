@@ -37,7 +37,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="{{ url_for('event.myEvents') }}">My Events</a>
-              <a class="dropdown-item" href="history.html">Booking History</a>
+              <a class="dropdown-item" href="{{ url_for('event.history') }}">Booking History</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="{{ url_for('auth.logout') }}">Log Out</a>
             </div>
