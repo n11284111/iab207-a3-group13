@@ -29,8 +29,8 @@ class EventForm(FlaskForm):
 
 # User login
 class LoginForm(FlaskForm):
-    user_name = StringField("User Name", validators=[
-                            InputRequired('Enter user name')])
+    email = StringField("Email", validators=[
+                            InputRequired('Enter user email')])
     password = PasswordField("Password", validators=[
                              InputRequired('Enter user password')])
     submit = SubmitField("Login")

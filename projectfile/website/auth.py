@@ -19,9 +19,9 @@ def register():
             pwd = register.password.data
             email = register.email_id.data
             #check if a user exists
-            user = db.session.scalar(db.select(User).where(User.name==uname))
+            user = db.session.scalar(db.select(User).where(User.emailid==email))
             if user:#this returns true when user is not None
-                flash('Username already exists, please try another')
+                flash('Email already in use, please try another')
                 return redirect(url_for('auth.register'))
             # don't store the password in plaintext!
             pwd_hash = generate_password_hash(pwd)
@@ -30,7 +30,8 @@ def register():
             db.session.add(new_user)
             db.session.commit()
             #commit to the database and redirect to HTML page
-            return redirect(url_for('main.index'))
+            flash('Successfully registered with the site! Please login with these details to access your account.')
+            return redirect(url_for('auth.register'))
     #the else is called when the HTTP request calling this page is a GET
     else:
         return render_template('user.html', form=register, heading='Register')
@@ -41,18 +42,19 @@ def login():
     error = None
     if(login_form.validate_on_submit()==True):
         #get the username and password from the database
-        user_name = login_form.user_name.data
+        email = login_form.email.data
         password = login_form.password.data
-        user = db.session.scalar(db.select(User).where(User.name==user_name))
+        user = db.session.scalar(db.select(User).where(User.emailid==email))
         #if there is no user with that name
         if user is None:
-            error = 'Incorrect username'#could be a security risk to give this much info away
+            error = 'Incorrect email or password'
         #check the password - notice password hash function
         elif not check_password_hash(user.password_hash, password): # takes the hash and password
-            error = 'Incorrect password'
+            error = 'Incorrect email or password'
         if error is None:
             #all good, set the login_user of flask_login to manage the user
             login_user(user)
+            flash("Successfully logged in!")
             return redirect(url_for('main.index'))
         else:
             flash(error)
@@ -62,4 +64,5 @@ def login():
 @login_required
 def logout():
     logout_user()
+    flash("Successfully logged out!")
     return redirect(url_for('main.index'))
