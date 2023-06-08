@@ -50,7 +50,7 @@ class RegisterForm(FlaskForm):
 
 # User comment
 class CommentForm(FlaskForm):
-    text = TextAreaField('Comment', [InputRequired()])
+    text = TextAreaField('Add comment', [InputRequired()])
     submit = SubmitField('Create')
 
 # Event booking

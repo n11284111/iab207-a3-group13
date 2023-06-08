@@ -26,6 +26,8 @@ def search():
 def sort():
     if request.method == "POST":
         genre = request.form.get("genre")
-        print(genre)
-        events = db.session.query(Event).filter(Event.genre == genre)
+        if genre == "All":
+            events = db.session.scalars(db.select(Event)).all()
+        else:
+            events = db.session.query(Event).filter(Event.genre == genre)
         return render_template('index.html', events=events)
