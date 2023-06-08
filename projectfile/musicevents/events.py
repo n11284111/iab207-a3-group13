@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from .models import Event, Comment, Booking
 import random
-from .forms import EventForm, CommentForm, TestForm
+from .forms import EventForm, CommentForm, UpdateForm
 from datetime import datetime
 from . import db
 import os
@@ -130,31 +130,28 @@ def book(id):
 @eventbp.route('/<id>/edit', methods=['GET', 'POST'])
 @login_required
 def update(id):
-    event = db.session.query(Event).filter(Event.id == id)
+
     print('Method type: ', request.method)
-    form = EventForm()
+    form = UpdateForm()
     if form.validate_on_submit():
+        event = db.session.scalar(db.select(Event).where(Event.id == id))
         # call the function that checks and returns image
         db_file_path = check_upload_file(form)
-        event = Event(
-            name=form.name.data,
-            artist=form.artist.data,
-            description=form.description.data,
-            genre=form.genre.data,
-            location=form.location.data,
-            date=form.date.data,
-            start_time=form.start_time.data,
-            end_time=form.end_time.data,
-            tickets=form.tickets.data,
-            ticket_price=form.ticket_price.data,
-            image=db_file_path,
-            user_id=current_user.id
-        )
-        # add the object to the db session
-        db.session.add(event)
+        event.name=form.name.data
+        event.artist=form.artist.data
+        event.description=form.description.data
+        event.genre=form.genre.data
+        event.location=form.location.data
+        event.date=form.date.data
+        event.start_time=form.start_time.data
+        event.end_time=form.end_time.data
+        event.tickets=form.tickets.data
+        event.ticket_price=form.ticket_price.data
+        event.image=db_file_path
+        event.status=form.status.data
         # commit to the database
         db.session.commit()
-        flash('Successfully created new music event', 'success')
+        flash('Successfully updated event', 'success')
         # Always end with redirect when form is valid
         return redirect(url_for('event.show', id=event.id))
     return render_template('events/create.html', form=form, header="Update")
