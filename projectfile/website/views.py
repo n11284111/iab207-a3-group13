@@ -21,3 +21,11 @@ def search():
             return render_template('index.html', events=events)
         else:
             return redirect(url_for('main.index'))
+        
+@mainbp.route('/sort', methods =["GET", "POST"])
+def sort():
+    if request.method == "POST":
+        genre = request.form.get("genre")
+        print(genre)
+        events = db.session.query(Event).filter(Event.genre == genre)
+        return render_template('index.html', events=events)

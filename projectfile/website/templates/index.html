@@ -15,6 +15,29 @@
 {% endblock %}
 
 {% block content %}
+
+<div class="col-md-2 mb-4" style="white-space:nowrap">
+   <form action="{{ url_for('main.sort') }}" method="post">
+      <label for="genre" class="form-label">Genre</label>
+      <select class="form-control" id="genre" name="genre" required>
+         <option selected disabled value="">Select</option>
+         <option>Rap</option>
+         <option>Hip Hop</option>
+         <option>Country</option>
+         <option>Rock</option>
+         <option>Pop</option>
+         <option>Dance</option>
+         <option>Electronic</option>
+         <option>Punk</option>
+         <option>Jazz</option>
+         <option>Metal</option>
+         <option>Other</option>
+      </select>
+      <button type="submit" class="btn btn-primary">Search</button>
+   </form>
+</div>
+
+
 <div class="container-fluid col-md-8 col-10">
    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4">
 
